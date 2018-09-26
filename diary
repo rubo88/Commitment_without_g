@@ -1,0 +1,132 @@
+Progress:
+
+..........................................................
+
+Starting parallel pool (parpool) using the 'local' profile ...
+connected to 2 workers.
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('commitment2', 'C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\commitment2.m', 151)" style="font-weight:bold">commitment2</a> (<a href="matlab: opentoline('C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\commitment2.m',151,0)">line 151</a>)
+Reference to non-existent field 'eta'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('unidimensional', 'C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\unidimensional.m', 56)" style="font-weight:bold">unidimensional</a> (<a href="matlab: opentoline('C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\unidimensional.m',56,0)">line 56</a>)
+   parfor k=1:K
+} 
+opentoline('C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\commitment2.m',151,0)
+unidimensional
+Progress:
+
+..........................................................
+
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('unidimensional', 'C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\unidimensional.m', 56)" style="font-weight:bold">unidimensional</a> (<a href="matlab: opentoline('C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\unidimensional.m',56,0)">line 56</a>)
+Reference to non-existent field 'bailouted'.
+} 
+opentoline('C:\Users\rubov\Dropbox\Fiscal externalities\Codes\Commitment\no g\unidimensional.m',56,0)
+unidimensional
+Progress:
+
+..........................................................
+
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+Progress:
+
+.........................................
+
+Starting parallel pool (parpool) using the 'local' profile ...
+connected to 2 workers.
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
