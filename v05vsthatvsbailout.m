@@ -28,7 +28,7 @@ addpath('..','funciones');
     
 %% Cases
     that         =[0.01:0.001:0.05];K=length(that);
-    bail         =[0:0.005:0.5];L=length(bail);
+    bail         =[0:0.1:0.5];L=length(bail);
     bail         =repmat(bail,[K,1]);
     that         =repmat(that,[L,1])';
 
@@ -75,11 +75,11 @@ addpath('..','funciones');
 
 V05real=real(V05);V05imag=imag(V05);V05imag_log=(V05imag~=0);%contour(that,g2,V05imag_log,80)
 %mesh(that,g2,V05)
-figure;set(gcf,'units','normalized','position',[0.01,0.25,0.65,0.65])
-contour3(that,bail,V05real,80);%contour(that,g2,V05real,80)
-xlabel('that'), ylabel('bail'), title('V05')%xlabel('that'), ylabel('g2'), title('V05')
-saveas(gcf,[pwd '/figures/mesh/bailout7'])
-saveas(gcf,[pwd '/figures/mesh/bailout7.png'])
+% figure;set(gcf,'units','normalized','position',[0.01,0.25,0.65,0.65])
+% contour3(that,bail,V05real,80);%contour(that,g2,V05real,80)
+% xlabel('that'), ylabel('bail'), title('V05')%xlabel('that'), ylabel('g2'), title('V05')
+% saveas(gcf,[pwd '/figures/mesh/bailout7'])
+% saveas(gcf,[pwd '/figures/mesh/bailout7.png'])
 
 % clear all 
 % clc
@@ -92,7 +92,12 @@ that_max=that(tmax_ind,gmax_ind)
 %g2_max  =g2(tmax_ind,gmax_ind)
 save('data/mesh/plotmesh_bailout7.mat')
 
-
-plot(bail(16,:),V05(16,:));hold all;plot(bail(46,:),V05(46,:));hold all;plot(bail(87,:),V05(87,:));
-xlabel('bail'), ylabel('V(0.5)'), title('Bailouts')%xlabel('that'), ylabel('g2'), title('V05')
-legend('that=2.3','that=2.7','that=3.1')
+figure
+hold on
+plot(that(:,1),V05(:,1),'-','LineWidth',2)
+plot(that(:,3),V05(:,3),'--','LineWidth',2)
+plot(that(:,6),V05(:,6),'-.','LineWidth',2)
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.5)','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+legend({'bailout=0','bailout=0.3$*C_{WP}$','bailout=0.5$*C_{WP}$'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+   saveas(gcf,[pwd '/figures/unidim/V05_vs_bail2'])
+   saveas(gcf,[pwd '/figures/unidim/V05_vs_bail2.png'])
