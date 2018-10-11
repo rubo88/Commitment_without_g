@@ -4,8 +4,12 @@ function SS=linearrules_bailout(S)
     S.Tvec(Nmid:end,1) =  S.that*(S.Pvec(Nmid:end,1)-0.5) ;
     S.T2vec(1:Nmid,1)  = -S.that*(S.Pvec(1:Nmid,1)-0.5) ;
     
-    S.Tvec(1:Nmid,1) =  -((1+S.T2vec(1:Nmid,1)).^(1-S.kappa)-1)./(1-S.kappa) ;
-    S.T2vec(Nmid:end,1)  = -((1+S.Tvec(Nmid:end,1)).^(1-S.kappa)-1)./(1-S.kappa) ;   
+    %S.Tvec(1:Nmid,1) =  -((1+S.T2vec(1:Nmid,1)).^(1-S.kappa)-1)./(1-S.kappa) ;
+    %S.T2vec(Nmid:end,1)  = -((1+S.Tvec(Nmid:end,1)).^(1-S.kappa)-1)./(1-S.kappa) ;   
+    
+    S.Tvec(1:Nmid,1) =     -((1+S.alpha.*S.T2vec(1:Nmid,1)./S.rho ).^(1-S.kappa)-1)./(S.alpha.*(1-S.kappa)) ;
+    S.T2vec(Nmid:end,1)  = -((1+S.alpha.*S.Tvec(Nmid:end,1)./S.rho).^(1-S.kappa)-1)./(S.alpha.*(1-S.kappa)) ;   
+    
     
     S.bailouted =0;
     if S.Tvec(1)>-S.bail*S.Cwp
