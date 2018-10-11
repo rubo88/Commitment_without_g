@@ -20,14 +20,14 @@ addpath('..','funciones');
     S.policyrules=@linearrules_bailout;
 % Preference parameters:
     S.rho       = 0.04;         % Time discount rate.
-    S.sigma     = 0.4;    
+    S.sigma     = 0.1;    
     S.sigma2    = S.sigma^2;
     S.Cwp       = S.rho;
     S.kappa     = 0.7;
     S.alpha     = 1;
     
 %% Cases
-    that         =[0.01:0.001:0.05];K=length(that);
+    that         =[0.001:0.001:0.04];K=length(that);
     bail         =[0:0.1:0.5];L=length(bail);
     bail         =repmat(bail,[K,1]);
     that         =repmat(that,[L,1])';
@@ -92,6 +92,9 @@ that_max=that(tmax_ind,gmax_ind)
 %g2_max  =g2(tmax_ind,gmax_ind)
 save('data/mesh/plotmesh_bailout7.mat')
 
+% Mean value
+EV1=mean(VAL1,3);
+
 figure
 hold on
 plot(that(:,1),V05(:,1),'-','LineWidth',2)
@@ -101,3 +104,14 @@ xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.5)','FontSi
 legend({'bailout=0','bailout=0.3$*C_{WP}$','bailout=0.5$*C_{WP}$'},'Interpreter','Latex','FontSize',14,'Location','southeast')
    saveas(gcf,[pwd '/figures/unidim/V05_vs_bail2'])
    saveas(gcf,[pwd '/figures/unidim/V05_vs_bail2.png'])
+
+figure
+hold on
+plot(that(:,1),EV1(:,1),'-','LineWidth',2)
+plot(that(:,3),EV1(:,3),'--','LineWidth',2)
+plot(that(:,6),EV1(:,6),'-.','LineWidth',2)
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('EV','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+legend({'bailout=0','bailout=0.3$*C_{WP}$','bailout=0.5$*C_{WP}$'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+   saveas(gcf,[pwd '/figures/unidim/EV_vs_bail2'])
+   saveas(gcf,[pwd '/figures/unidim/EV_vs_bail2.png'])
+   

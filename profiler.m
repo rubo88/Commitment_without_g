@@ -15,12 +15,12 @@ addpath('..','funciones');
     %S.X=@cara;
 % Preference parameters:
     S.rho       = 0.04;         % Time discount rate.
-    S.sigma     = 0.4;    
+    S.sigma     = 0.5;    
     S.sigma2    = S.sigma^2;
     S.Cwp       = S.rho;
     S.kappa     = 0.7;
     S.alpha     = 1;
-    S.that      =0.017;
-    S.bail      =0.7;
+    S.that      =0.025;
+    S.bail      =0;
     
     S=commitment2(S);

@@ -209,5 +209,7 @@ if S.options.ploteach==1
         text(0.45, 0.98,namefig0)
 end
 
+%[S.erg]=ErgDistUpwind(S.Pvec,aa,(S.svec).^2); 
+
 SS=S;
 end
