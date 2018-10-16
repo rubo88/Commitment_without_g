@@ -15,7 +15,7 @@ addpath('..','funciones');
     %S.X=@cara;
 % Preference parameters:
     S.rho       = 0.04;         % Time discount rate.
-    S.sigma     = 0.5;    
+    S.sigma     = 0.02;    
     S.sigma2    = S.sigma^2;
     S.Cwp       = S.rho;
     S.kappa     = 0.7;

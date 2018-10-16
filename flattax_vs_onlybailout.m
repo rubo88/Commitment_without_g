@@ -1,10 +1,6 @@
-%% This code plots V(0.5) over that and g2
-%% Experiments
-% 1 and 2 bail=0.2
-% 3       bail=0.4
-% 4       bail=0.6
-% 5       fix g2 and move bail
-% 6       fix g2 and move bail (finer)  
+% This code compares the commitment eq of a flat tax with the one of only
+% bailouts(zero tax)
+
 clear all
 clc
 close all
@@ -27,9 +23,9 @@ addpath('..','funciones');
     S.alpha     = 1;
     
 %% Cases
-    %bail0=(S.rho./S.alpha).*((1-(1-S.kappa).*S.alpha.*0.025./S.rho).^(1/(1-S.kappa))-1);
+    bail0=-(S.rho./S.alpha).*((1-(1-S.kappa).*S.alpha.*0.025/2./S.rho).^(1/(1-S.kappa))-1);
     that         =[0.025 0];K=length(that);
-    bail         =[0 0.025/2/S.Cwp];L=length(bail);
+    bail         =[0 bail0/S.Cwp];L=length(bail);
     bail         =repmat(bail,[K,1]);
     that         =repmat(that,[L,1])';
 

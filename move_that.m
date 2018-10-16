@@ -1,6 +1,5 @@
-%% This code plots V(0.5) over one paramter
-%% Experiments
-
+%% This code plots V(0.5) over that
+ 
 clear all
 clc
 close all

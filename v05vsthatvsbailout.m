@@ -1,10 +1,5 @@
-%% This code plots V(0.5) over that and g2
-%% Experiments
-% 1 and 2 bail=0.2
-% 3       bail=0.4
-% 4       bail=0.6
-% 5       fix g2 and move bail
-% 6       fix g2 and move bail (finer)  
+%% This code plots V(0.5) over that and bailout
+
 clear all
 clc
 close all
@@ -20,7 +15,7 @@ addpath('..','funciones');
     S.policyrules=@linearrules_bailout;
 % Preference parameters:
     S.rho       = 0.04;         % Time discount rate.
-    S.sigma     = 0.1;    
+    S.sigma     = 0.4;    
     S.sigma2    = S.sigma^2;
     S.Cwp       = S.rho;
     S.kappa     = 0.7;
