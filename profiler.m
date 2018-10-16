@@ -1,3 +1,5 @@
+%% Simple code to call commitment2.m and experiment
+
 clear all
 clc
 close all

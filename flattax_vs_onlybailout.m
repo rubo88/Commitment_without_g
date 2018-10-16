@@ -25,7 +25,7 @@ addpath('..','funciones');
     
 %% Cases
 % Possible thats (second column zeros)
-    that=[0.01:0.001:0.035];K=length(that);
+    that=[0.01:0.001:0.03];K=length(that);
     that=[that; zeros(1,K)]';
 % Possible equivalent bailouts (first column zeros)    
     equivalent_bail=@(t) -(S.rho./S.alpha).*((1-(1-S.kappa).*S.alpha.*t/2./S.rho).^(1/(1-S.kappa))-1)./S.Cwp;    

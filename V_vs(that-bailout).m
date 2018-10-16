@@ -1,4 +1,5 @@
-%% This code plots V(0.5) over that and bailout
+%% Compute the commitment eq for different values of that and bailout
+%	Plots a contour and some slices
 
 clear all
 clc
@@ -22,7 +23,7 @@ addpath('..','funciones');
     S.alpha     = 1;
     
 %% Cases
-    that         =[0.01:0.001:0.035];K=length(that);
+    that         =[0.01:0.001:0.03];K=length(that);
     bail         =[0:0.1:0.5];L=length(bail);
     bail         =repmat(bail,[K,1]);
     that         =repmat(that,[L,1])';
