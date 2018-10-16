@@ -120,35 +120,75 @@ figure;set(gcf,'units','normalized','position',[0.01,0.25,0.65,0.65])%set(gcf,'u
    
 %% V(0.5) vs that
 figure
+set(gcf,'units','normalized','position',[0.01,0.25,0.45,0.65])
+set(gca,'units','normalized','position',[0.1,0.1,0.85,0.75])
 hold on
 plot(that(:,1),V05(:,1),'-','LineWidth',2)
 plot(that(:,1),V05(:,2),'--','LineWidth',2)
 
-xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.5)','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.5)','FontSize',16);%xlabel('that'), ylabel('g2'), title('V05')
 legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+ 
+   ax1 = gca;
+ax1_pos = ax1.Position; % position of first axes
+ax2 = axes('Position',ax1_pos,...
+    'XAxisLocation','top',...
+    'YAxisLocation','right',...
+    'Color','none');  
+scale=get(ax1,'XTick');
+set(ax2,  'XTickLabel', round(equivalent_bail(scale)*100)./100)    
+xlabel('$b/C^{WP}$','Interpreter','Latex','FontSize',16)
+yticks([])
+title('Bailouts under commitment','FontSize',16)   
    saveas(gcf,[pwd '/figures/unidim/V05_flattax_vs_onlybailout'])
    saveas(gcf,[pwd '/figures/unidim/V05_flattax_vs_onlybailout.png'])
    
 %% V(0.75) vs that
 figure
+set(gcf,'units','normalized','position',[0.01,0.25,0.45,0.65])
+set(gca,'units','normalized','position',[0.1,0.1,0.85,0.75])
 hold on
 plot(that(:,1),V075(:,1),'-','LineWidth',2)
 plot(that(:,1),V075(:,2),'--','LineWidth',2)
 
-xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.75)','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.75)','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
 legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+
+ax1 = gca;
+ax1_pos = ax1.Position; % position of first axes
+ax2 = axes('Position',ax1_pos,...
+    'XAxisLocation','top',...
+    'YAxisLocation','right',...
+    'Color','none');  
+scale=get(ax1,'XTick');
+set(ax2,  'XTickLabel', round(equivalent_bail(scale)*100)./100)    
+xlabel('$b/C^{WP}$','Interpreter','Latex','FontSize',16)
+yticks([])
+title('Bailouts under commitment','FontSize',16)   
    saveas(gcf,[pwd '/figures/unidim/V075_flattax_vs_onlybailout'])
    saveas(gcf,[pwd '/figures/unidim/V075_flattax_vs_onlybailout.png'])
-   
 %% EV vs that
 % Mean value
 EV1=mean(VAL1,3);
 figure
+set(gcf,'units','normalized','position',[0.01,0.25,0.45,0.65])
+set(gca,'units','normalized','position',[0.1,0.1,0.85,0.75])
 hold on
 plot(that(:,1),EV1(:,1),'-','LineWidth',2)
 plot(that(:,1),EV1(:,2),'--','LineWidth',2)
-xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('EV','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('EV','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
 legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+
+ax1 = gca;
+ax1_pos = ax1.Position; % position of first axes
+ax2 = axes('Position',ax1_pos,...
+    'XAxisLocation','top',...
+    'YAxisLocation','right',...
+    'Color','none');  
+scale=get(ax1,'XTick');
+set(ax2,  'XTickLabel', round(equivalent_bail(scale)*100)./100)    
+xlabel('$b/C^{WP}$','Interpreter','Latex','FontSize',16)
+yticks([])
+title('Bailouts under commitment','FontSize',16)     
       saveas(gcf,[pwd '/figures/unidim/EV_flattax_vs_onlybailout'])
    saveas(gcf,[pwd '/figures/unidim/EV_flattax_vs_onlybailout.png'])
-   
