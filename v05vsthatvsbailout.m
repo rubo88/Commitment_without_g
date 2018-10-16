@@ -22,7 +22,7 @@ addpath('..','funciones');
     S.alpha     = 1;
     
 %% Cases
-    that         =[0.001:0.001:0.04];K=length(that);
+    that         =[0.01:0.001:0.05];K=length(that);
     bail         =[0:0.1:0.5];L=length(bail);
     bail         =repmat(bail,[K,1]);
     that         =repmat(that,[L,1])';

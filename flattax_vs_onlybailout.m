@@ -13,7 +13,6 @@ addpath('..','funciones');
 %% Parameters
     S.N=101;N=S.N;
     S.constVol= false; % If true: s(P)=sigma is constant.% If false: s(P)= 4*P*(1-P)*sigma
-    S.policyrules=@linearrules_bailout;
 % Preference parameters:
     S.rho       = 0.04;         % Time discount rate.
     S.sigma     = 0.1;    
@@ -21,13 +20,18 @@ addpath('..','funciones');
     S.Cwp       = S.rho;
     S.kappa     = 0.7;
     S.alpha     = 1;
+%% Tax schedule
+    S.policyrules=@linearrules_bailout; % linear taxing with bailout
     
 %% Cases
-    bail0=-(S.rho./S.alpha).*((1-(1-S.kappa).*S.alpha.*0.025/2./S.rho).^(1/(1-S.kappa))-1);
-    that         =[0.025 0];K=length(that);
-    bail         =[0 bail0/S.Cwp];L=length(bail);
-    bail         =repmat(bail,[K,1]);
-    that         =repmat(that,[L,1])';
+% Possible thats (second column zeros)
+    that=[0.01:0.001:0.05];K=length(that);
+    that=[that; zeros(1,K)]';
+% Possible equivalent bailouts (first column zeros)    
+    equivalent_bail=@(t) -(S.rho./S.alpha).*((1-(1-S.kappa).*S.alpha.*t/2./S.rho).^(1/(1-S.kappa))-1)./S.Cwp;    
+    bail=equivalent_bail(that(:,1));
+    bail=[zeros(K,1) bail];
+    L=2;
 
 %% Allocate variables to store alocations
     CONS1=nan(K,L,S.N);CONS2=nan(K,L,S.N);
@@ -40,7 +44,7 @@ addpath('..','funciones');
     fracWP0=nan(K,L);V05=nan(K,L);bailouted=nan(K,L);
 %% Run commitment2.m for every case
       fprintf('Progress:\n');fprintf(['\n' repmat('.',1,K) '\n\n'])
-   for k=1:K
+   parfor k=1:K
         
        for l=1:L
             if print
@@ -67,8 +71,10 @@ addpath('..','funciones');
 
    diary([pwd '/figures/mesh/output.txt'])
     diary off
-%% Plot results:
-Pvec=SSS.Pvec;
+%% Plot C,V,LoM and tax schedules for flat tax vs bailout
+pos=20;% Choose with position to plot
+
+Pvec=linspace(0,1,N)';
 figure;set(gcf,'units','normalized','position',[0.01,0.25,0.65,0.65])%set(gcf,'units','points','position',[10,50,800,650])
     % 1. Value functions:
         subplot(2,2,1)
@@ -78,27 +84,27 @@ figure;set(gcf,'units','normalized','position',[0.01,0.25,0.65,0.65])%set(gcf,'u
                                             % the planner's solution under mu=P.
         %rhoV2muP= vbar + eta*log(1-Pvec);   % rho*V^{',mu=P}: Value for Region 2 
                                             % that same planner's solution.
-        plot(Pvec,squeeze(VAL1(1,1,:)),'-b', Pvec,squeeze(VAL1(2,2,:)),'--r',...     % Multiply value functions by
-             Pvec,VALWP(1,1)*ones(N,1),'-.k'           )    % rho to get them to per-period 
+        plot(Pvec,squeeze(VAL1(pos,1,:)),'-b', Pvec,squeeze(VAL1(pos,2,:)),'--r',...     % Multiply value functions by
+             Pvec,VALWP(pos,1)*ones(N,1),'-.k'           )    % rho to get them to per-period 
         %     Pvec,rhoVmuP,'-.k',Pvec,rhoV2muP,'-.k')   % level, as the others.
         xlabel('P'), ylabel('V^1, V^2'), title('Value functions')
         yticks([])
-        text(1.05,VALWP(1,1),'V^{wp}')
+        text(1.05,VALWP(pos,1),'V^{wp}')
         legend('Flat tax','Only Bailout')
     % 2. Drift (and volatility, if varying) of P:
         subplot(2,2,2),
-        plot(Pvec,squeeze(PLAW(1,1,:)),'-b',Pvec,squeeze(PLAW(2,2,:)),'--r',Pvec,0*Pvec,'-.k')
+        plot(Pvec,squeeze(PLAW(pos,1,:)),'-b',Pvec,squeeze(PLAW(pos,2,:)),'--r',Pvec,0*Pvec,'-.k')
             %hold on, plot(S.Pvec,S.svec,'-.k') 
             %legend('drift','vol.')
             ylabel('a(P)')
         xlabel('P'), title('P: Law of motion')
     % 3. Consumption functions:
-        subplot(2,2,3), plot(Pvec,squeeze(CONS1(1,1,:)),'-b', Pvec,squeeze(CONS1(2,2,:)),'--r', Pvec,SSS.Cwp*ones(N,1),'-.k')
+        subplot(2,2,3), plot(Pvec,squeeze(CONS1(pos,1,:)),'-b', Pvec,squeeze(CONS1(pos,2,:)),'--r', Pvec,S.Cwp*ones(N,1),'-.k')
         xlabel('P'), ylabel('C^1'), title('Consumption')
-        text(1.05,SSS.Cwp,'C^{wp}')
+        text(1.05,S.Cwp,'C^{wp}')
     % 4. Government policy rules:
         subplot(2,2,4), 
-        plot(Pvec,squeeze(TR1(1,1,:)),'-b', Pvec,squeeze(TR1(2,2,:)),'--r')
+        plot(Pvec,squeeze(TR1(pos,1,:)),'-b', Pvec,squeeze(TR1(pos,2,:)),'--r')
         title('Government policy')
 %         text(1.05, TR1(1,1,N),'T^1(P)')
 %         text(1.05, TR1(2,2,N),'T^2(P)')
@@ -108,4 +114,29 @@ figure;set(gcf,'units','normalized','position',[0.01,0.25,0.65,0.65])%set(gcf,'u
         st1=['that=' char(string(that(1,1))) ',fracWP0=' char(string(fracWP0(1,1))) ')'];
         namefig0=['Parameters:' st1];
         text(0.45, 0.98,namefig0)
+      saveas(gcf,[pwd '/figures/unidim/LoM_flattax_vs_onlybailout'])
+      saveas(gcf,[pwd '/figures/unidim/LoM_flattax_vs_onlybailout.png'])
+   
+%% V(0.5) vs that
+figure
+hold on
+plot(that(:,1),V05(:,1),'-','LineWidth',2)
+plot(that(:,1),V05(:,2),'--','LineWidth',2)
 
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.5)','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+   saveas(gcf,[pwd '/figures/unidim/V05_flattax_vs_onlybailout'])
+   saveas(gcf,[pwd '/figures/unidim/V05_flattax_vs_onlybailout.png'])
+
+%% EV vs that
+% Mean value
+EV1=mean(VAL1,3);
+figure
+hold on
+plot(that(:,1),EV1(:,1),'-','LineWidth',2)
+plot(that(:,1),EV1(:,2),'--','LineWidth',2)
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('EV','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+      saveas(gcf,[pwd '/figures/unidim/EV_flattax_vs_onlybailout'])
+   saveas(gcf,[pwd '/figures/unidim/EV_flattax_vs_onlybailout.png'])
+   
