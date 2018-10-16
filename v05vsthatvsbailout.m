@@ -55,6 +55,7 @@ addpath('..','funciones');
             VALWP(k,l)=SSS.rhoVwp;CONSWP(k,l)=SSS.Cwp;
             fracWP0(k,l)=SSS.fracWP0;
             V05(k,l)=SSS.V(ceil(SSS.N/2));
+            V075(k,l)=SSS.V(ceil(3.*SSS.N/4));
             bailouted(k,l)=SSS.bailouted;
             if print
                 fprintf('fracWP0= %4.2f\n',fracWP0(k,l))
@@ -92,6 +93,17 @@ legend({'bailout=0','bailout=0.3$*C_{WP}$','bailout=0.4$*C_{WP}$'},'Interpreter'
    saveas(gcf,[pwd '/figures/unidim/V05_vs_bail2'])
    saveas(gcf,[pwd '/figures/unidim/V05_vs_bail2.png'])
 
+   figure
+hold on
+plot(that(:,1),V075(:,1),'-','LineWidth',2)
+plot(that(:,pos1),V075(:,pos1),'--','LineWidth',2)
+plot(that(:,pos2),V075(:,pos2),'-.','LineWidth',2)
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.75)','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+legend({'bailout=0','bailout=0.3$*C_{WP}$','bailout=0.4$*C_{WP}$'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+   saveas(gcf,[pwd '/figures/unidim/V075_vs_bail2'])
+   saveas(gcf,[pwd '/figures/unidim/V075_vs_bail2.png'])
+   
+   
 figure
 hold on
 plot(that(:,1),EV1(:,1),'-','LineWidth',2)

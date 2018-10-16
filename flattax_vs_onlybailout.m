@@ -25,7 +25,7 @@ addpath('..','funciones');
     
 %% Cases
 % Possible thats (second column zeros)
-    that=[0.01:0.001:0.05];K=length(that);
+    that=[0.01:0.001:0.035];K=length(that);
     that=[that; zeros(1,K)]';
 % Possible equivalent bailouts (first column zeros)    
     equivalent_bail=@(t) -(S.rho./S.alpha).*((1-(1-S.kappa).*S.alpha.*t/2./S.rho).^(1/(1-S.kappa))-1)./S.Cwp;    
@@ -61,6 +61,7 @@ addpath('..','funciones');
             VALWP(k,l)=SSS.rhoVwp;CONSWP(k,l)=SSS.Cwp;
             fracWP0(k,l)=SSS.fracWP0;
             V05(k,l)=SSS.V(ceil(SSS.N/2));
+            V075(k,l)=SSS.V(ceil(3.*SSS.N/4));
             bailouted(k,l)=SSS.bailouted;
             if print
                 fprintf('fracWP0= %4.2f\n',fracWP0(k,l))
@@ -127,7 +128,18 @@ xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.5)','FontSi
 legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
    saveas(gcf,[pwd '/figures/unidim/V05_flattax_vs_onlybailout'])
    saveas(gcf,[pwd '/figures/unidim/V05_flattax_vs_onlybailout.png'])
+   
+%% V(0.75) vs that
+figure
+hold on
+plot(that(:,1),V075(:,1),'-','LineWidth',2)
+plot(that(:,1),V075(:,2),'--','LineWidth',2)
 
+xlabel('$\hat{t}$','Interpreter','Latex','FontSize',16), ylabel('V(0.75)','FontSize',16), title('Bailouts under commitment','FontSize',16)%xlabel('that'), ylabel('g2'), title('V05')
+legend({'Flat tax','Only bailout'},'Interpreter','Latex','FontSize',14,'Location','southeast')
+   saveas(gcf,[pwd '/figures/unidim/V075_flattax_vs_onlybailout'])
+   saveas(gcf,[pwd '/figures/unidim/V075_flattax_vs_onlybailout.png'])
+   
 %% EV vs that
 % Mean value
 EV1=mean(VAL1,3);
