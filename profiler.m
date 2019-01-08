@@ -17,12 +17,14 @@ addpath('..','funciones');
     %S.X=@cara;
 % Preference parameters:
     S.rho       = 0.04;         % Time discount rate.
-    S.sigma     = 0.02;    
+    S.sigma     = 0.1;    
     S.sigma2    = S.sigma^2;
     S.Cwp       = S.rho;
     S.kappa     = 0.7;
     S.alpha     = 1;
-    S.that      =0.025;
+    S.that      =0.015;
     S.bail      =0;
     
     S=commitment2(S);
+    
+    text(0.4, 0.98,'Dynamics under commitment','FontSize',16)

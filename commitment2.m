@@ -181,19 +181,21 @@ if S.options.ploteach==1
         text(1.05,S.rhoVwp,'V^{wp}')
     % 2. Drift (and volatility, if varying) of P:
         subplot(2,2,2),
-        plot(S.Pvec,S.a,'--k',S.Pvec,0*S.Pvec,'-k')
+        plot(S.Pvec,S.a,'--k')
         if S.constVol
             ylabel('drift a(P)')
             text(0.5,0.7*max(S.a),sprintf('s(P)=%1.3f',S.sigma))
         else
             hold on, plot(S.Pvec,S.svec,'-.k') 
+            plot(S.Pvec,0*S.Pvec,'-k')
             legend('drift','vol.')
-            ylabel('a(P),s(P)')
+            ylabel('$\dot{P}$,$s(P)$','Interpreter','Latex','FontSize',14)
         end
         xlabel('P'), title('P: Law of motion')
     % 3. Consumption functions:
         subplot(2,2,3), plot(S.Pvec,S.C,'-b', S.Pvec,S.C2,'--r', S.Pvec,S.Cwp*ones(N,1),'-.k')
         xlabel('P'), ylabel('C^1, C^2'), title('Consumption')
+        ylim([0 1.1*S.Cwp])
         text(1.05,S.Cwp,'C^{wp}')
     % 4. Government policy rules:
         subplot(2,2,4), 
@@ -204,9 +206,9 @@ if S.options.ploteach==1
 
         ha = axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
         
-        st1=['that=' char(string(S.that)) ',fracWP0=' char(string(S.fracWP0)) ')'];
-        namefig0=['Parameters:' st1];
-        text(0.45, 0.98,namefig0)
+        %st1=['that=' char(string(S.that)) ',fracWP0=' char(string(S.fracWP0)) ')'];
+        %namefig0=['Parameters:' st1];
+        %text(0.45, 0.98,namefig0)
 end
 
 %[S.erg]=ErgDistUpwind(S.Pvec,aa,(S.svec).^2); 
